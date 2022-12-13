@@ -28,6 +28,28 @@ class BookSerializer(serializers.Serializer):
     def create(self, validated_data):
         return Book.objects.create(**validated_data)
 
+class PersonSerializer(serializers.ModelSerializer):
+
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    class Meta:
+        model = Person
+        fields = ('__all__')
+
+# class PersonSerializer(serializers.Serializer):
+#     name = serializers.CharField()
+#     age = serializers.IntegerField()
+#     time_creation = serializers.DateTimeField(read_only=True)
+#
+#     def create(self, validated_data):
+#         return Person.objects.create(**validated_data)
+#
+#     def update(self, instance, validated_data):
+#         instance.name = validated_data.get('name', instance.name)
+#         instance.age = validated_data.get('age', instance.age)
+#         instance.time_create = timezone.now()#validated_data.get('time_create', instance.time_create)
+#         instance.save()
+#         return instance
+
 # def encode():
 #     model = BookModel('Властелин колец', 'Толкин')
 #     model_sr = BookSerializer(model)
